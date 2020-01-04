@@ -1,11 +1,11 @@
 通过官方PPA安装Ubuntu make
-``` shell
+
 sudo add-apt-repository ppa:ubuntu-desktop/ubuntu-make
 
 sudo apt-get update
 
 sudo apt-get install ubuntu-make
-```
+
 通过umake命令安装VSCode
 
 sudo umake ide visual-studio-code
