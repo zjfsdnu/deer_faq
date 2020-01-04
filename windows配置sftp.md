@@ -4,9 +4,9 @@ https://github.com/PowerShell/Win32-OpenSSH/releases
 
 ### 账号登陆
 
-ssh-keygen -t rsa 生成密钥对 复制C:\Users\Administrator\.ssh\id_rsa 登录时使用此私钥
+ssh-keygen -t rsa 生成密钥对 复制C:\Users\Administrator\.ssh\id_rsa文件 登录时使用此私钥
 
-如果使用账号的话 使用windows账号
+如果使用账号登录的话 使用windows系统账号
 
 ### 修改配置导致mac登录失败
 
