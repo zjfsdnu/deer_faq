@@ -25,3 +25,5 @@ ssh-keygen -t rsa 生成密钥对 复制C:\Users\Administrator\.ssh\id_rsa文件
 [SFTP Servers](https://www.sftp.net/servers)
 
 [buru](https://buruserver.com/download/free)
+
+[Rebex Tiny SFTP Server](https://labs.rebex.net/tiny-sftp-server)
