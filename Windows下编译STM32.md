@@ -4,7 +4,7 @@
 
 下载 mingw-get-setup.exe 并安装 MinGW Installation Manager 。
 
-在 MinGW Installation Manager 中选择 mingw32-base 和 mingw32-gcc-g++ 安装，右键选择“Mark for Installation”,之后选择"Installation -> Apply Changes”，等待下载完成。
+在 MinGW Installation Manager 中选择 mingw32-base 和 mingw32-gcc-g++ 两项，右键选择“Mark for Installation”,之后选择"Installation -> Apply Changes”，等待下载完成。
 
 如果部分包下载失败，可以再次尝试，已经下载的包不会重新下载。
 
