@@ -1,0 +1,20 @@
+在windows应用商店安装ubuntu系统，报错WslRegisterDistribution failed with error: 0x8007019e
+
+1.报错：
+
+Installing, this may take a few minutes...
+WslRegisterDistribution failed with error: 0x8007019e
+The Windows Subsystem for Linux optional component is not enabled. Please enable it and try again.
+See https://aka.ms/wslinstall for details.
+Press any key to continue...
+
+2.原因：
+
+未安装Windows子系统支持。
+
+3.解决办法：
+1.win+x，选择Windows PowerShell（管理员）
+2.输入：
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+3.回车，输入Y，重启！
+4.重新打开已经安装的子系统，等几分钟，输入账户和密码。
