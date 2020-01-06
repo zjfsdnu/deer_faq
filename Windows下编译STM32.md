@@ -14,7 +14,7 @@
 
 ### GNU Arm Embedded Toolchain
 
-下载地址：https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm
+下载地址：https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads
 
 下载最新的Windows安装包，我下载的是 gcc-arm-none-eabi-9-2019-q4-major-win32-sha2.exe 。
 
