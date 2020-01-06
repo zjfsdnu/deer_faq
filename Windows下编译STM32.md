@@ -24,7 +24,7 @@
 
 ### 安装STM32CubeMX
 
-下载地址：https://www.st.com/zh/development-tools/stm32cubemx.html，点击获取软件
+下载地址：https://www.st.com/zh/development-tools/stm32cubemx.html ， 点击**获取软件**
 
 全部按照默认选项安装。
 
