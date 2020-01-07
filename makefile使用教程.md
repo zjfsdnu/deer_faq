@@ -93,11 +93,10 @@ source.txt:
 ```
 上面代码中，source.txt后面没有前置条件，就意味着它跟其他文件都无关，只要这个文件还不存在，每次调用make source.txt，它都会生成。
 
-
-> $ make result.txt
-
-> $ make result.txt
-
+``` shell
+$ make result.txt
+$ make result.txt
+```
 上面命令连续执行两次make result.txt。第一次执行会先新建 source.txt，然后再新建 result.txt。第二次执行，Make发现 source.txt 没有变动（时间戳早于 result.txt），就不会执行任何操作，result.txt 也不会重新生成。
 
 如果需要生成多个文件，往往采用下面的写法。
@@ -111,12 +110,11 @@ source: file1 file2 file3
 
 执行make source命令后，就会一次性生成 file1，file2，file3 三个文件。这比下面的写法要方便很多。
 
-> $ make file1
-
-> $ make file2
-
-> $ make file3
-
+``` shell
+$ make file1
+$ make file2
+$ make file3
+```
 #### 命令（commands）
 
 命令（commands）表示如何更新目标文件，由一行或多行的Shell命令组成。它是构建"目标"的具体指令，它的运行结果通常就是生成目标文件。
