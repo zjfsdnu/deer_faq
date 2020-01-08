@@ -243,4 +243,4 @@ arm-none-eabi-objcopy -O binary -S build/f103test.elf build/f103test.bin
 3. 通过*arm-none-eabi-gcc* 将这18个.o文件编译为.elf文件
 4. 通过*arm-none-eabi-size* 查看elf文件的结构和大小
 5. 通过*arm-none-eabi-objcopy -O ihex* 将elf文件转为.hex 16进制字符串文件
-6. 通过*arm-none-eabi-objcopy -O binary将elf文件转为.bin 二进制文件
+6. 通过*arm-none-eabi-objcopy -O binary* 将elf文件转为.bin 二进制文件
