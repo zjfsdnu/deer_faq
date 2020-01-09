@@ -180,58 +180,32 @@ make -n
 
 ```shell
 mkdir build
-arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -ID
-rivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/main.d" -Wa,-a,-ad,-alms=build/main.lst Src/main.c -o build/main.o
-arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -ID
-rivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_it.d" -Wa,-a,-ad,-alms=build/stm32f1xx_it.lst Src/stm32f1xx_it.c -o build/stm32f1xx_it.o
-arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -ID
-rivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_msp.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_msp.lst Src/stm32f1xx_hal_msp.c -o build/stm32f1xx_hal_msp.o
-arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -ID
-rivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_gpio_ex.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_gpio_ex.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c -o
- build/stm32f1xx_hal_gpio_ex.o
-arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -ID
-rivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_tim.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_tim.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c -o build/stm32
-f1xx_hal_tim.o
-arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -ID
-rivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_tim_ex.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_tim_ex.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim_ex.c -o bu
-ild/stm32f1xx_hal_tim_ex.o
-arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -ID
-rivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c -o build/stm32f1xx_hal.o
-arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -ID
-rivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_rcc.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_rcc.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c -o build/stm32
-f1xx_hal_rcc.o
-arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -ID
-rivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_rcc_ex.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_rcc_ex.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c -o bu
-ild/stm32f1xx_hal_rcc_ex.o
-arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -ID
-rivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_gpio.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_gpio.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c -o build/st
-m32f1xx_hal_gpio.o
-arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -ID
-rivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_dma.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_dma.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.c -o build/stm32
-f1xx_hal_dma.o
-arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -ID
-rivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_cortex.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_cortex.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c -o bu
-ild/stm32f1xx_hal_cortex.o
-arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -ID
-rivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_pwr.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_pwr.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c -o build/stm32
-f1xx_hal_pwr.o
-arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -ID
-rivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_flash.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_flash.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash.c -o build
-/stm32f1xx_hal_flash.o
-arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -ID
-rivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_flash_ex.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_flash_ex.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash_ex.c
- -o build/stm32f1xx_hal_flash_ex.o
-arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -ID
-rivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_exti.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_exti.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.c -o build/st
-m32f1xx_hal_exti.o
-arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -ID
-rivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/system_stm32f1xx.d" -Wa,-a,-ad,-alms=build/system_stm32f1xx.lst Src/system_stm32f1xx.c -o build/system_stm32f1xx.o
-arm-none-eabi-gcc -x assembler-with-cpp -c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDri
-vers/CMSIS/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/startup_stm32f103xe.d" startup_stm32f103xe.s -o build/startup_stm32f103xe.o
-arm-none-eabi-gcc build/main.o build/stm32f1xx_it.o build/stm32f1xx_hal_msp.o build/stm32f1xx_hal_gpio_ex.o build/stm32f1xx_hal_tim.o build/stm32f1xx_hal_tim_ex.o build/stm32f1xx_hal.o build/stm32f1xx_hal_rcc.o build/stm32f1xx_hal_r
-cc_ex.o build/stm32f1xx_hal_gpio.o build/stm32f1xx_hal_dma.o build/stm32f1xx_hal_cortex.o build/stm32f1xx_hal_pwr.o build/stm32f1xx_hal_flash.o build/stm32f1xx_hal_flash_ex.o build/stm32f1xx_hal_exti.o build/system_stm32f1xx.o build
-/startup_stm32f103xe.o -mcpu=cortex-m3 -mthumb   -specs=nano.specs -TSTM32F103ZETx_FLASH.ld  -lc -lm -lnosys  -Wl,-Map=build/f103test.map,--cref -Wl,--gc-sections -o build/f103test.elf
+
+arm-none-eabi-gcc 						-c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/main.d" -Wa,-a,-ad,-alms=build/main.lst Src/main.c -o build/main.o
+arm-none-eabi-gcc 						-c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_it.d" -Wa,-a,-ad,-alms=build/stm32f1xx_it.lst Src/stm32f1xx_it.c -o build/stm32f1xx_it.o
+arm-none-eabi-gcc 						-c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_msp.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_msp.lst Src/stm32f1xx_hal_msp.c -o build/stm32f1xx_hal_msp.o
+arm-none-eabi-gcc 						-c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_gpio_ex.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_gpio_ex.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c -o build/stm32f1xx_hal_gpio_ex.o
+arm-none-eabi-gcc 						-c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_tim.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_tim.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c -o build/stm32f1xx_hal_tim.o
+arm-none-eabi-gcc 						-c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_tim_ex.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_tim_ex.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim_ex.c -o build/stm32f1xx_hal_tim_ex.o
+arm-none-eabi-gcc 						-c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c -o build/stm32f1xx_hal.o
+arm-none-eabi-gcc 						-c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_rcc.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_rcc.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c -o build/stm32f1xx_hal_rcc.o
+arm-none-eabi-gcc 						-c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_rcc_ex.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_rcc_ex.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c -o build/stm32f1xx_hal_rcc_ex.o
+arm-none-eabi-gcc 						-c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_gpio.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_gpio.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c -o build/stm32f1xx_hal_gpio.o
+arm-none-eabi-gcc 						-c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_dma.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_dma.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.c -o build/stm32f1xx_hal_dma.o
+arm-none-eabi-gcc 						-c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_cortex.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_cortex.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c -o build/stm32f1xx_hal_cortex.o
+arm-none-eabi-gcc 						-c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_pwr.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_pwr.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c -o build/stm32f1xx_hal_pwr.o
+arm-none-eabi-gcc 						-c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_flash.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_flash.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash.c -o build/stm32f1xx_hal_flash.o
+arm-none-eabi-gcc 						-c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_flash_ex.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_flash_ex.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash_ex.c -o build/stm32f1xx_hal_flash_ex.o
+arm-none-eabi-gcc 						-c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/stm32f1xx_hal_exti.d" -Wa,-a,-ad,-alms=build/stm32f1xx_hal_exti.lst Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.c -o build/stm32f1xx_hal_exti.o
+arm-none-eabi-gcc 						-c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/system_stm32f1xx.d" -Wa,-a,-ad,-alms=build/system_stm32f1xx.lst Src/system_stm32f1xx.c -o build/system_stm32f1xx.o
+arm-none-eabi-gcc -x assembler-with-cpp -c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/startup_stm32f103xe.d" startup_stm32f103xe.s -o build/startup_stm32f103xe.o
+
+arm-none-eabi-gcc build/main.o build/stm32f1xx_it.o build/stm32f1xx_hal_msp.o build/stm32f1xx_hal_gpio_ex.o build/stm32f1xx_hal_tim.o build/stm32f1xx_hal_tim_ex.o build/stm32f1xx_hal.o build/stm32f1xx_hal_rcc.o build/stm32f1xx_hal_rcc_ex.o build/stm32f1xx_hal_gpio.o build/stm32f1xx_hal_dma.o build/stm32f1xx_hal_cortex.o build/stm32f1xx_hal_pwr.o build/stm32f1xx_hal_flash.o build/stm32f1xx_hal_flash_ex.o build/stm32f1xx_hal_exti.o build/system_stm32f1xx.o build/startup_stm32f103xe.o -mcpu=cortex-m3 -mthumb   -specs=nano.specs -TSTM32F103ZETx_FLASH.ld  -lc -lm -lnosys  -Wl,-Map=build/f103test.map,--cref -Wl,--gc-sections -o build/f103test.elf
+
 arm-none-eabi-size build/f103test.elf
+   text    data     bss     dec     hex filename
+   2908      20    1572    4500    1194 build/f103test.elf
+
 arm-none-eabi-objcopy -O ihex build/f103test.elf build/f103test.hex
 arm-none-eabi-objcopy -O binary -S build/f103test.elf build/f103test.bin
 ```
@@ -244,4 +218,68 @@ arm-none-eabi-objcopy -O binary -S build/f103test.elf build/f103test.bin
 4. 通过*arm-none-eabi-size* 查看elf文件的结构和大小
 5. 通过*arm-none-eabi-objcopy -O ihex* 将elf文件转为.hex 16进制字符串文件
 6. 通过*arm-none-eabi-objcopy -O binary* 将elf文件转为.bin 二进制文件
+
+拿出第一条来分析一下
+```shell
+arm-none-eabi-gcc -c -mcpu=cortex-m3 -mthumb   -DUSE_HAL_DRIVER -DSTM32F103xE -IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include -ID
+rivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 -MMD -MP -MF"build/main.d" -Wa,-a,-ad,-alms=build/main.lst Src/main.c -o build/main.o
+```
+`-c`表示编译为.o文件 不连接
+
+`-mcpu=cortex-m3 -mthumb`
+
+`-DUSE_HAL_DRIVER -DSTM32F103xE` 这里定义了两个宏变量
+
+在 `Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h` 头文件里有判断
+```c
+#if defined (USE_HAL_DRIVER)
+ #include "stm32f1xx_hal.h"
+#endif /* USE_HAL_DRIVER */
+
+#if defined(STM32F100xB)
+  #include "stm32f100xb.h"
+#elif defined(STM32F100xE)
+  #include "stm32f100xe.h"
+#elif defined(STM32F101x6)
+  #include "stm32f101x6.h"
+#elif defined(STM32F101xB)
+  #include "stm32f101xb.h"
+#elif defined(STM32F101xE)
+  #include "stm32f101xe.h"
+#elif defined(STM32F101xG)
+  #include "stm32f101xg.h"
+#elif defined(STM32F102x6)
+  #include "stm32f102x6.h"
+#elif defined(STM32F102xB)
+  #include "stm32f102xb.h"
+#elif defined(STM32F103x6)
+  #include "stm32f103x6.h"
+#elif defined(STM32F103xB)
+  #include "stm32f103xb.h"
+#elif defined(STM32F103xE)
+  #include "stm32f103xe.h"
+#elif defined(STM32F103xG)
+  #include "stm32f103xg.h"
+#elif defined(STM32F105xC)
+  #include "stm32f105xc.h"
+#elif defined(STM32F107xC)
+  #include "stm32f107xc.h"
+#else
+ #error "Please select first the target STM32F1xx device used in your application (in stm32f1xx.h file)"
+#endif
+```
+
+`-IInc -IDrivers/STM32F1xx_HAL_Driver/Inc -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F1xx/Include -IDrivers/CMSIS/Include`
+
+这里加了5个包含头文件的目录
+
+`-Og -Wall` 
+
+`-fdata-sections -ffunction-sections` 
+
+`-g -gdwarf-2` 
+
+`-MMD -MP -MF"build/main.d"` 
+
+`-Wa,-a,-ad,-alms=build/main.lst`
 
