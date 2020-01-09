@@ -48,8 +48,8 @@ int fun_3(void)
  
 void main(void)
 {
-        fun_0();
-        fun_3();
+	fun_0();
+    fun_3();
 }
 ```
 
