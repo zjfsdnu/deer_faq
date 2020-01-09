@@ -273,9 +273,12 @@ rivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 
 
 这里加了5个包含头文件的目录
 
-`-Og -Wall` 
+`-Og` 优化调试体验。 -Og 启用不会影响调试的优化
 
-`-fdata-sections -ffunction-sections` 
+`-Wall` 编译后显示所有警告
+
+`-fdata-sections -ffunction-sections` 为每个function和data item分配独立的section
+参考 https://www.cnblogs.com/wlzy/p/10665756.html
 
 `-g -gdwarf-2` 
 
