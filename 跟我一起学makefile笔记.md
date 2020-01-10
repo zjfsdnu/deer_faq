@@ -1,8 +1,8 @@
-## 2 介绍
+# 2 介绍
 
 
 
-## 3 书写规则
+# 3 书写规则
 
 
 
@@ -10,7 +10,7 @@
 
 
 
-## 4 书写命令
+# 4 书写命令
 
 命令以`tab`键开头
 
@@ -98,7 +98,7 @@ foo.c: foo.y
 	$(run-yacc)
 ```
 
-## 5 使用变量
+# 5 使用变量
 
 变量代表一个字符串 执行时会自动展开
 
@@ -289,7 +289,7 @@ bar.o: bar.c
 
 
 
-## 6 使用条件判断
+# 6 使用条件判断
 
 ### 示例
 
@@ -338,7 +338,7 @@ endif
 
 
 
-## 7 使用函数
+# 7 使用函数
 
 ### 函数的调用语法
 
@@ -504,15 +504,168 @@ $(join <list1>,<list2>)
 $(join aaa bbb, 111 222 333) #返回aaa111 bbb222 333
 ```
 
-
-
 ### foreach函数
 
+```makefile
+$(foreach <var>,<list>,<text>)
+
+names := a b c d
+files := $(foreach n,$(names),$(n).o)
+#返回` a.o b.o c.o d.o`
+```
+
+参数 <var> 的作用域只在 foreach 函数当中
+
+### if 函数
+
+```makefile
+$(if <condition>,<then-part>)
+$(if <condition>,<then-part>,<else-part>)
+```
+
+如果 <condition> 为真（非空字符串），那个 <then-part> 会是整个函数
+的返回值，如果 <condition> 为假（空字符串），那么 <else-part> 会是整个函数的返回值，此时如果<else-part> 没有被定义，那么，整个函数返回空字串
+
+### call函数
+
+用来创建新的参数化的函数
+
+```makefile
+$(call <expression>,<param1>,<param2>,...,<paramn>)
+
+reverse = $(1) $(2)
+foo = $(call reverse,a,b) #a b
+
+reverse = $(2) $(1)
+foo = $(call reverse,a,b) #b a
+```
+
+### origin 函数
+
+```makefile
+$(origin <variable>)
+
+ifdef bletch
+	ifeq "$(origin bletch)" "environment"
+		bletch = barf, gag, etc.
+	endif
+endif
+```
+
+ origin 函数的返回值
+
+|    返回值    |                 描述                 |
+| :----------: | :----------------------------------: |
+|  undefined   |            从来没有定义过            |
+|   default    |           比如“CC”这个变量           |
+| environment  | 是一个环境变量 并且-e 参数没有被打开 |
+|     file     |         被定义在 Makefile 中         |
+| command line |             被命令行定义             |
+|   override   |      被 override 指示符重新定义      |
+|  automatic   |     是一个命令运行中的自动化变量     |
+
+### shell 函数
+
+```makefile
+contents := $(shell cat foo)
+files := $(shell echo *.c)
+```
+
+### 控制 make 的函数
+
+```makefile
+$(error <text ...>) # 产生一个致命的错误
+$(warning <text ...>) # 输出一段警告信息
+
+ifdef ERROR_001
+	$(error error is $(ERROR_001))
+endif
+
+ERR = $(error found an error!)
+
+.PHONY: err
+
+err: $(ERR)
+```
 
 
 
+# 8 make的运行
+
+### make 的退出码
+
+| 退出码 |                           描述                           |
+| :----: | :------------------------------------------------------: |
+|   0    |                         成功执行                         |
+|   1    |                    运行时出现任何错误                    |
+|   2    | 使用了 make 的“-q”选项，并且 make 使得一些目标不需要更新 |
+
+### 指定 Makefile
+
+```shell
+make –f hchen.mk
+make --file hchen.mk
+```
+
+### 指定目标
+
+`MAKECMDGOALS` 存放你所指定的终极目标的列表
+
+```makefile
+sources = foo.c bar.c
+ifneq ( $(MAKECMDGOALS),clean)
+	include $(sources:.c=.d)
+endif
+```
+
+```makefile
+.PHONY: all
+all: prog1 prog2 prog3 prog4
+```
+
+### 检查规则
+
+|                             参数                             |                  描述                  |
+| :----------------------------------------------------------: | :------------------------------------: |
+|             -n, --just-print, --dry-run, --recon             |        不执行参数，只是打印命令        |
+|                         -t, --touch                          | 把目标文件的时间更新，但不更改目标文件 |
+|                        -q, --question                        |  如果目标不存在，会打印出一条出错信息  |
+| -W <file>, --what-if=<file>, --assume-new=<file>, --new-file=<file> |                                        |
+|                            -p -v                             |                                        |
+
+### make 的参数
+
+|                             参数                             |                             描述                             |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+|                            -b, -m                            |                 忽略和其它版本 make 的兼容性                 |
+|                      -B, --always-make                       |              认为所有的目标都需要更新（重编译）              |
+|                 -C <dir>, --directory=<dir>                  |                   指定读取 makefile 的目录                   |
+|                      -debug[=<options>]                      | 输出 make 的调试信息<br />a: 也就是 all，输出所有的调试信息<br />b: 也就是 basic，只输出简单的调试信息。即输出不需要重编译的目标<br /> |
+|                              -d                              |                       相当于“–debug=a”                       |
+|                 -e, --environment-overrides                  |        指明环境变量的值覆盖 makefile 中定义的变量的值        |
+|         -f <file>, --file=<file>, --makefile=<file>          |                   指定需要执行的 makefile                    |
+|                          -h, --help                          |                         显示帮助信息                         |
+|                     -i , --ignore-errors                     |                    在执行时忽略所有的错误                    |
+|                -I <dir>, --include-dir=<dir>                 |              指定一个被包含 makefile 的搜索目标              |
+|                      -j [N], --jobs[=N]                      |                      同时运行命令的个数                      |
+|                       -k, --keep-going                       |                       出错也不停止运行                       |
+|    -l <load>, --load-average[=<load>], -max-load[=<load>]    |                   指定 make 运行命令的负载                   |
+|             -n, --just-print, --dry-run, --recon             |            仅输出执行过程中的命令序列，但并不执行            |
+|      -o <file>, --old-file=<file>, --assume-old=<file>       |   不重新生成的指定的 <file>，即使这个目标的依赖文件新于它    |
+|                    -p, --print-data-base                     |       输出 makefile 中的所有数据，包括所有的规则和变量       |
+|                        -q, --question                        |   不运行命令，也不输出。仅仅是检查所指定的目标是否需要更新   |
+|                    -r, --no-builtin-rules                    |                  禁止 make 使用任何隐含规则                  |
+|                  -R, --no-builtin-variabes                   |           禁止 make 使用任何作用于变量上的隐含规则           |
+|                    -s, --silent, --quiet                     |                 在命令运行时不输出命令的输出                 |
+|                 -S, --no-keep-going, --stop                  |                      取消“-k”选项的作用                      |
+|                         -t, --touch                          | 相当于 UNIX 的 touch 命令，只是把目标的修改日期变成最新的，也就是阻止生成目标的命令运行 |
+|                        -v, --version                         |         输出 make 程序的版本、版权等关于 make 的信息         |
+|                    -w, --print-directory                     |            输出运行 makefile 之前和之后的当前目录            |
+|                     --no-print-directory                     |                         禁止“-w”选项                         |
+| -W <file>, --what-if=<file>, --new-file=<file>, --assume-new=<file> |                                                              |
+|                  --warn-undefined-variables                  |       只要 make 发现有未定义的变量，那么就输出警告信息       |
 
 
 
-
+# 9 隐含规则
 
