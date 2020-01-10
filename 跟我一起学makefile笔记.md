@@ -453,6 +453,59 @@ override CFLAGS += $(patsubst %,-I%,$(subst :, ,$(VPATH)))
 
 ### 文件名操作函数
 
+**取目录函数**
+
+```makefile
+$(dir <names...>)
+$(dir src/foo.c hacks) #返回src/ ./
+```
+
+**取文件函数**
+
+```makefile
+$(notdir <names...>)
+$(notdir src/foo.c hacks) #返回foo.c hacks
+```
+
+**取后缀函数**
+
+```makefile
+$(suffix <names...>)
+$(suffix src/foo.c src-1.0/bar.c hacks) #返回.c .c
+```
+
+**取前缀函数**
+
+```makefile
+$(basename <names...>)
+$(basename src/foo.c src-1.0/bar.c hacks) #返回src/foo src-1.0/bar hacks
+```
+
+**加后缀函数**
+
+```makefile
+$(addsuffix <suffix>,<names...>)
+$(addsuffix .c,foo bar)
+```
+
+**加前缀函数**
+
+```makefile
+$(addprefix <prefix>,<names...>)
+$(addprefix src/,foo bar)
+```
+
+**连接函数**
+
+```makefile
+$(join <list1>,<list2>)
+$(join aaa bbb, 111 222 333) #返回aaa111 bbb222 333
+```
+
+
+
+### foreach函数
+
 
 
 
