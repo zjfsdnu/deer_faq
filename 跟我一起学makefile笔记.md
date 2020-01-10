@@ -12,7 +12,7 @@
 
 ## 4 书写命令
 
-命令以`tab`开头
+命令以`tab`键开头
 
 ### 显示命令
 
@@ -232,6 +232,8 @@ objects += another.o
 ```
 
 ### override指示符
+
+覆盖命令行参数设置的变量
 
 ```makefile
 override <variable>; = <value>;
