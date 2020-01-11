@@ -625,13 +625,11 @@ all: prog1 prog2 prog3 prog4
 
 ### 检查规则
 
-|                             参数                             |                  描述                  |
-| :----------------------------------------------------------: | :------------------------------------: |
-|             -n, --just-print, --dry-run, --recon             |        不执行参数，只是打印命令        |
-|                         -t, --touch                          | 把目标文件的时间更新，但不更改目标文件 |
-|                        -q, --question                        |  如果目标不存在，会打印出一条出错信息  |
-| -W <file>, --what-if=<file>, --assume-new=<file>, --new-file=<file> |                                        |
-|                            -p -v                             |                                        |
+|                 参数                 |                  描述                  |
+| :----------------------------------: | :------------------------------------: |
+| -n, --just-print, --dry-run, --recon |        不执行参数，只是打印命令        |
+|             -t, --touch              | 把目标文件的时间更新，但不更改目标文件 |
+|            -q, --question            |  如果目标不存在，会打印出一条出错信息  |
 
 ### make 的参数
 
@@ -640,7 +638,7 @@ all: prog1 prog2 prog3 prog4
 |                            -b, -m                            |                 忽略和其它版本 make 的兼容性                 |
 |                      -B, --always-make                       |              认为所有的目标都需要更新（重编译）              |
 |                 -C <dir>, --directory=<dir>                  |                   指定读取 makefile 的目录                   |
-|                      -debug[=<options>]                      | 输出 make 的调试信息<br />a: 也就是 all，输出所有的调试信息<br />b: 也就是 basic，只输出简单的调试信息。即输出不需要重编译的目标<br /> |
+|                      -debug[=<options>]                      | 输出 make 的调试信息<br />a: 也就是 all，输出所有的调试信息<br />b: 也就是 basic，只输出简单的调试信息。即输出不需要重编译的目标 |
 |                              -d                              |                       相当于“–debug=a”                       |
 |                 -e, --environment-overrides                  |        指明环境变量的值覆盖 makefile 中定义的变量的值        |
 |         -f <file>, --file=<file>, --makefile=<file>          |                   指定需要执行的 makefile                    |
@@ -662,10 +660,200 @@ all: prog1 prog2 prog3 prog4
 |                        -v, --version                         |         输出 make 程序的版本、版权等关于 make 的信息         |
 |                    -w, --print-directory                     |            输出运行 makefile 之前和之后的当前目录            |
 |                     --no-print-directory                     |                         禁止“-w”选项                         |
-| -W <file>, --what-if=<file>, --new-file=<file>, --assume-new=<file> |                                                              |
+| -W <file>, --what-if=<file>, --new-file=<file>, --assume-new=<file> | 设定文件“FILE”的时间戳为当前时间，但不改变文件实际的最后修改时间 |
 |                  --warn-undefined-variables                  |       只要 make 发现有未定义的变量，那么就输出警告信息       |
 
 
 
 # 9 隐含规则
+
+内嵌变量 `CFLAGS` 代表了 `gcc` 编译器编译源文件的编译选项
+
+### 使用隐含规则
+
+隐含规则所提供的依赖文件只是一个最基本的（通常它们之间的对应关系为：“EXENAME.o”对应“EXENAME.c”、“EXENAME”对应于“EXENAME.o”）
+
+```makefile
+foo : foo.o bar.o
+	cc -o foo foo.o bar.o $(CFLAGS) $(LDFLAGS)
+```
+
+隐含规则是：
+
+```makefile
+foo.o : foo.c
+	cc –c foo.c $(CFLAGS)
+bar.o : bar.c
+	cc –c bar.c $(CFLAGS)
+```
+
+```makefile
+# 要使用pascal编译器必须明确指出编译命令
+foo.o: foo.p
+	pc $< -o $@
+```
+
+```makefile
+# sample Makefile
+
+CUR_DIR = $(shell pwd)
+INCS := $(CUR_DIR)/include
+CFLAGS := -Wall –I$(INCS)
+
+EXEF := foo bar
+
+.PHONY : all clean
+all : $(EXEF)
+
+foo : CFLAGS+=-O2
+bar : CFLAGS+=-g
+
+clean :
+	$(RM) *.o *.d $(EXES)
+```
+
+### 隐含规则一览
+
+make 的默认后缀列表为：
+
+`.out、.a、.ln、.o、.c、.cc、.C、.p、.f、.F、.r、.y、.l、.s、.S、.mod、.sym、.def、.h、.info、.dvi、.tex、.texinfo、.texi、txinfo、.w、.ch、.web、.sh、.elc、el`
+
+|          隐含规则          | 依赖目标                       | 命令                                                         |
+| :------------------------: | :----------------------------- | ------------------------------------------------------------ |
+|         编译C 程序         | .o<-.c                         | $(CC) -c $(CPPFLAGS) $(CFLAGS)                               |
+|        编译C++ 程序        | .o<-.cc或.C                    | $(CXX) -c $(CPPFLAGS) $(CFLAGS)                              |
+|      编译Pascal 程序       | .o<-.p                         | $(PC) -c $(PFLAGS)                                           |
+|  编译Fortran/Ratfor 程序   | .o<-.r<br />.o<-.F<br />.o<-.f | $(FC) –c $(FFLAGS) $(RFLAGS)<br />$(FC) –c $(FFLAGS) $(CPPFLAGS)<br />$(FC) –c $(FFLAGS) |
+| 预处理Fortran/Ratfor 程序  | .o<-.r<br />.o<-.F             | $(FC) –F $(FFLAGS) $(RFLAGS)<br />$(FC) –F $(FFLAGS) $(CPPFLAGS) |
+|     编译Modula-2 程序      | .sym<-.def<br />.o<-.mod       | $(M2C) $(M2FLAGS) $(DEFFLAGS)<br />$(M2C) $(M2FLAGS) $(MODFLAGS) |
+| 汇编和需要预处理的汇编程序 | .o<-.s<br />.s<-.S             | $(AS) $(ASFLAGS)<br />$(CPP) $(CPPFLAGS)                     |
+|   链接单一的object 文件    | <-.o                           | $(CC) $(LDFLAGS) N.o $(LOADLIBES) $(LDLIBS)                  |
+|        Yacc C 程序         | .c<-.y                         | $(YACC) $(YFLAGS)                                            |
+|         Lex C 程序         | .c<-.l                         | $(LEX) $(LFLAGS)”                                            |
+
+### 隐含规则使用的变量
+
+**关于命令的变量**
+
+| 变量名   | 对应命令 | 描述                                       |
+| -------- | -------- | ------------------------------------------ |
+| AR       | ar       | 函数库打包程序 可创建静态库.a 文档         |
+| AS       | as       | 汇编程序                                   |
+| CC       | cc       | C 编译程序                                 |
+| CXX      | g++      | C++ 编译程序                               |
+| CO       | co       | 从RCS 中提取文件的程序                     |
+| CPP      | $(CC) -E | C 程序的预处理器（输出是标准输出设备）     |
+| FC       | f77      | Fortran 和Ratfor 的编译器和预处理程序      |
+| GET      | get      | 从SCCS 中提取文件程序                      |
+| LEX      | lex      | 将Lex 语言转变为C 或Ratfor 的程序          |
+| PC       | pc       | Pascal 语言编译程序                        |
+| YACC     | yacc     | Yacc 文法分析器（针对于C 程序）            |
+| YACCR    | yacc –r  | Yacc 文法分析器（针对于Ratfor 程序）       |
+| MAKEINFO | makeinfo | 转换Texinfo 源文件（.texi）到Info 文件程序 |
+| TEX      | tex      | 从TeX 源文件创建TeX DVI 文件的程序         |
+| TEXI2DVI | texi2dvi | 从Texinfo 源文件创建TeX DVI 文件的程序     |
+| WEAVE    | weave    | 转换Web 到TeX 的程序                       |
+| CWEAVE   | cweave   | 转换C Web 到TeX 的程序                     |
+| TANGLE   | tangle   | 转换Web 到Pascal 语言的程序                |
+| CTANGLE  | ctangle  | 转换C Web 到C                              |
+| RM       | rm -f    | 删除文件命令                               |
+
+**关于命令参数的变量**
+
+| 变量名   | 默认值 | 描述                                             |
+| -------- | ------ | ------------------------------------------------ |
+| ARFLAGS  | rv     | 函数库打包程序AR 命令的参数                      |
+| ASFLAGS  |        | 汇编语言编译器参数（当明显地调用.s 或.S 文件时） |
+| CFLAGS   |        | C 语言编译器参数                                 |
+| CXXFLAGS |        | C++ 语言编译器参数                               |
+| COFLAGS  |        | RCS 命令参数                                     |
+| CPPFLAGS |        | C 预处理器参数（C 和Fortran 编译器也会用到）     |
+| FFLAGS   |        | Fortran 语言编译器参数                           |
+| GFLAGS   |        | SCCS “get”程序参数                               |
+| LDFLAGS  |        | 链接器参数                                       |
+| LFLAGS   |        | Lex 文法分析器参数                               |
+| PFLAGS   |        | Pascal 语言编译器参数                            |
+| RFLAGS   |        | Ratfor 程序的Fortran 编译器参数                  |
+| YFLAGS   |        | Yacc 文法分析器参数                              |
+
+### 隐含规则链
+
+除非中间的目标不存在， 才会引发中间规则
+
+只要目标成功产生，所产生的中间目标文件会被以 `rm -f` 删除
+
+使用特殊目标 `.INTERMEDIATE`来指除将那些文件作为中间过程文件来处理
+
+需要保留的文件作为特殊目标 `.SECONDARY` 的依赖文件罗列
+
+需要保留所有.o 的中间过程文件，可以将.o 文件的模式（%.o）作为特殊目标 `.PRECIOUS` 的依赖
+
+同一个隐含规则在一个“链”中只能出现一次
+
+Make会优化一些特殊的隐含规则，而不生成中间文件
+
+### 定义模式规则
+
+
+
+### 老式风格的“后缀规则”
+
+
+
+### 隐含规则搜索算法
+
+
+
+
+
+# 10 使用make 更新函数库文件
+
+函数库文件也就是对Object 文件（程序编译的中间文件）的打包文件。在Unix 下，一般是由命令 `ar` 来完成打包工作
+
+### 函数库文件的成员
+
+```makefile
+foolib(hack.o): hack.o
+	ar cr foolib hack.o
+	
+foolib(hack.o kludge.o)
+
+foolib(*.o)
+```
+
+### 函数库成员的隐含规则
+
+```shell
+make foo.a(bar.o)
+# 等价于
+cc -c bar.c -o bar.o
+ar r foo.a bar.o
+rm -f bar.o
+```
+
+`$%`
+
+### 函数库文件的后缀规则
+
+```makefile
+.c.a:
+    $(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $*.o
+    $(AR) r $@ $*.o
+    $(RM) $*.o
+# 等价于
+(%.o) : %.c
+    $(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $*.o
+    $(AR) r $@ $*.o
+    $(RM) $*.o
+```
+
+### 注意事项
+
+请小心使用make的并行机制（ `-j` 参数）
+
+
+
+
+
+
 
