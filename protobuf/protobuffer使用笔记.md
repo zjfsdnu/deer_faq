@@ -110,7 +110,7 @@ list_people_gotest: list_people.go list_people_go
 
 clean:
 	rm -f protoc_middleman_go tutorial/*.pb.go add_person_go list_people_go
-	$(shell  find . -regex '.*\.out\|.*\.exe\|.*\.i\|.*\.s\|.*\.o' | xargs rm -f)
+	find . -regex '.*\.out\|.*\.exe\|.*\.i\|.*\.s\|.*\.o' | xargs rm -f
 
 ```
 
