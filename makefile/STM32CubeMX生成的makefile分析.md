@@ -278,7 +278,7 @@ rivers/CMSIS/Include -Og -Wall -fdata-sections -ffunction-sections -g -gdwarf-2 
 `-Wall` 编译后显示所有警告
 
 `-fdata-sections -ffunction-sections` 为每个function和data item分配独立的section
-参考 [**gcc -ffunction-sections -fdata-sections -Wl,–gc-sections 参数详解**](https://github.com/zjfsdnu/deer_faq/blob/master/gcc -ffunction-sections -fdata-sections -Wl%2C–gc-sections 参数详解.md)
+参考 [**gcc -ffunction-sections -fdata-sections -Wl,–gc-sections 参数详解**]('https://github.com/zjfsdnu/deer_faq/blob/master/gcc -ffunction-sections -fdata-sections -Wl%2C–gc-sections 参数详解.md')
 
 `-g -gdwarf-2` 
 
