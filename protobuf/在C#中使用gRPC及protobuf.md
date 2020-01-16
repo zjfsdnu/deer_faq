@@ -34,9 +34,10 @@ service gRPC {
 
 接着需要使用protobuf编译器，编译准备好的protobuf定义文件，为我们生成服务定义和消息定义等各种class。
 
-先使用nuget安装grpc和protobuf包：搜索Grpc包和Google.Protobuf依赖包，这2个包在下面的server和client工程中也需要安装。
-这个库因为需要使用protobuf的编译器，还需要安装一个Grpc.Tools的工具包。
-在安装了Grpc.Tools后，在C:\Users\Administrator\.nuget\packages\grpc.tools\2.26.0\tools\windows_x64\下，包括了protoc.exe以及cs的生成插件grpc_csharp_plugin.exe。然后我们可以使用它们编译protobuf定义文件，生成cs源码了。
+- 先使用nuget安装grpc和protobuf包：搜索Grpc包和Google.Protobuf依赖包，这2个包在下面的server和client工程中也需要安装
+- 这个库因为需要使用protobuf的编译器，还需要安装一个Grpc.Tools的工具包
+
+在安装了Grpc.Tools后，在C:\Users\Administrator\.nuget\packages\grpc.tools\2.26.0\tools\windows_x64\下，包括了protoc.exe以及cs的生成插件grpc_csharp_plugin.exe。然后我们可以使用它们编译protobuf定义文件，生成cs源码了
 
 编写makefile文件（批处理也可 请自行编写）
 
@@ -65,7 +66,14 @@ proto:
 实现gRPC.gRPCBase类，实现我们定义的方法。
 
 ```c#
-class gRPCImpl : gRPC.gRPCBase
+using Grpc.Core;
+using GrpcDemo;
+using System;
+using System.Threading.Tasks;
+
+namespace grpcConsoleServer
+{
+    class gRPCImpl : gRPC.gRPCBase
     {
         // 实现SayHello方法
         public override Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
@@ -73,7 +81,9 @@ class gRPCImpl : gRPC.gRPCBase
             Console.WriteLine("Get : " + request.Name);
             return Task.FromResult(new HelloReply { Message = "Hello " + request.Name });
         }
+
     }
+}
 ```
 
 **在应用中启动服务**
@@ -149,5 +159,7 @@ namespace grpcConsoleClient
 编译完成后，分别到服务端和客户端，启动应用，可以看到调用及结果。
 
 ————————————————
+
 版权声明：本文为CSDN博主「whereismatrix」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+
 原文链接：https://blog.csdn.net/whereismatrix/article/details/78477090
