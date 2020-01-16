@@ -12,13 +12,69 @@
 
 3. 在项目根目录下执行 生成 `.pb.go` 文件
 
+   ```protobuf
+   syntax = "proto3";
+   package tutorial;
+   
+   message Person {
+       string name = 1;
+       int32 id = 2; // Unique ID number for this person.
+       string email = 3;
+   
+       enum PhoneType {
+           MOBILE = 0;
+           HOME = 1;
+           WORK = 2;
+       }
+   
+       message PhoneNumber {
+           string number = 1;
+           PhoneType type = 2;
+       }
+   
+       repeated PhoneNumber phones = 4;
+   }
+   
+   // Our address book file is just one of these.
+   message AddressBook {
+       repeated Person people = 1;
+   }
+   ```
+
    ```shell
    protoc -I=$SRC_DIR --go_out=$DST_DIR $SRC_DIR/addressbook.proto
+   protoc -I=$SRC_DIR --csharp_out=$DST_DIR $SRC_DIR/addressbook.proto
    ```
 
    $SRC_DIR 为源文件路径
 
 4. 可以在go项目里直接调用生成的`.pb.go` 文件
+
+```go
+book := &pb.AddressBook{}
+// ...
+
+// Write the new address book back to disk.
+out, err := proto.Marshal(book)
+if err != nil {
+        log.Fatalln("Failed to encode address book:", err)
+}
+if err := ioutil.WriteFile(fname, out, 0644); err != nil {
+        log.Fatalln("Failed to write address book:", err)
+}
+```
+
+```go
+// Read the existing address book.
+in, err := ioutil.ReadFile(fname)
+if err != nil {
+        log.Fatalln("Error reading file:", err)
+}
+book := &pb.AddressBook{}
+if err := proto.Unmarshal(in, book); err != nil {
+        log.Fatalln("Failed to parse address book:", err)
+}
+```
 
 
 
