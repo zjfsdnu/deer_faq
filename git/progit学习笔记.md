@@ -323,23 +323,146 @@ $ git commit -a -m 'added new benchmarks'
 
 完成这个任务最简单而又有效的工具是 `git log` 命令
 
-```
+```shell
 $ git clone https://github.com/schacon/simplegit-progit
 
 $ git log
 commit ca82a6dff817ec66f44342007202690a93763949
 Author: Scott Chacon <schacon@gee-mail.com>
 Date: Mon Mar 17 21:52:11 2008 -0700
+	changed the version number
+	
+commit 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7
+Author: Scott Chacon <schacon@gee-mail.com>
+Date: Sat Mar 15 16:40:33 2008 -0700
+	removed unnecessary test
+	
+commit a11bef06a3f659402fe7563abf99ad00de2209e6
+Author: Scott Chacon <schacon@gee-mail.com>
+Date: Sat Mar 15 10:31:28 2008 -0700
+	first commit
+```
+
+默认不用任何参数的话，git log 会按提交时间列出所有的更新，最近的更新排在最上面。这个命令会列出每个提交的 SHA-1 校验和、作者的名字和电子邮件地址、提交时间以及提交说明
+
+一个常用的选项是 -p，用来显示每次提交的内容差异。 你也可以加上 -2 来仅显示最近两次提交：
+
+```shell
+$ git log -p -2
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon <schacon@gee-mail.com>
+Date: Mon Mar 17 21:52:11 2008 -0700
 changed the version number
+diff --git a/Rakefile b/Rakefile
+index a874b73..8f94139 100644
+--- a/Rakefile
++++ b/Rakefile
+@@ -5,7 +5,7 @@ require 'rake/gempackagetask'
+spec = Gem::Specification.new do |s|
+s.platform = Gem::Platform::RUBY
+s.name = "simplegit"
+- s.version = "0.1.0"
++ s.version = "0.1.1"
+s.author = "Scott Chacon"
+s.email = "schacon@gee-mail.com"
+s.summary = "A simple gem for using Git in Ruby code."
 commit 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7
 Author: Scott Chacon <schacon@gee-mail.com>
 Date: Sat Mar 15 16:40:33 2008 -0700
 removed unnecessary test
+diff --git a/lib/simplegit.rb b/lib/simplegit.rb
+index a0a60ae..47c6340 100644
+--- a/lib/simplegit.rb
++++ b/lib/simplegit.rb
+@@ -18,8 +18,3 @@ class SimpleGit
+end
+end
+-
+-if $0 == __FILE__
+- git = SimpleGit.new
+- puts git.show
+-end
+\ No newline at end of file
+```
+
+该选项除了显示基本信息之外，还附带了每次 commit 的变化。 当进行代码审查，或者快速浏览某个搭档提交的 commit 所带来的变化的时候，这个参数就非常有用了。 你也可以为 git log 附带一系列的总结性选项。
+比如说，如果你想看到每次提交的简略的统计信息，你可以使用 --stat 选项：
+
+```shell
+$ git log --stat
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon <schacon@gee-mail.com>
+Date: Mon Mar 17 21:52:11 2008 -0700
+	changed the version number
+Rakefile | 2 +-
+1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7
+Author: Scott Chacon <schacon@gee-mail.com>
+Date: Sat Mar 15 16:40:33 2008 -0700
+	removed unnecessary test
+lib/simplegit.rb | 5 -----
+1 file changed, 5 deletions(-)
+
 commit a11bef06a3f659402fe7563abf99ad00de2209e6
 Author: Scott Chacon <schacon@gee-mail.com>
 Date: Sat Mar 15 10:31:28 2008 -0700
-first commit
+	first commit
+README | 6 ++++++
+Rakefile | 23 +++++++++++++++++++++++
+lib/simplegit.rb | 25 +++++++++++++++++++++++++
+3 files changed, 54 insertions(+)
 ```
+
+另外一个常用的选项是 --pretty。 这个选项可以指定使用不同于默认格式的方式展示提交历史
+
+```shell
+$ git log --pretty=oneline
+ca82a6dff817ec66f44342007202690a93763949 changed the version number
+085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7 removed unnecessary test
+a11bef06a3f659402fe7563abf99ad00de2209e6 first commit
+```
+
+当 oneline 或 format 与另一个 log 选项 --graph 结合使用时尤其有用。 这个选项添加了一些 ASCII 字符串来形象地展示你的分支、合并历史：
+
+```shell
+$ git log --pretty=format:"%h %s" --graph
+* 2d3acf9 ignore errors from SIGCHLD on trap
+* 5e3ee11 Merge branch 'master' of git://github.com/dustin/grit
+|\
+| * 420eac9 Added a method for getting the current branch.
+* | 30e367c timeout code and tests
+* | 5a09431 add timeout protection to grit
+* | e1193f8 support for heads with slashes in them
+|/
+* d6016bc require time for xmlschema
+* 11d191e Merge branch 'defunkt' into local
+```
+
+##### 限制输出长度
+
+下面的命令列出所有最近两周内的提交：
+
+```
+$ git log --since=2.weeks
+```
+
+如果要查看 Git 仓库中，2008 年 10 月期间，Junio Hamano 提交的但未合并的测试文件，可以用下面的查询命令：
+
+```shell
+$ git log --pretty="%h - %s" --author=gitster --since="2008-10-01" \
+--before="2008-11-01" --no-merges -- t/
+5610e3b - Fix testcase failure when extended attributes are in use
+acd3b9e - Enhance hold_lock_file_for_{update,append}() API
+f563754 - demonstrate breakage of detached checkout with symbolic link
+HEAD
+d1a43f2 - reset --hard/read-tree --reset -u: remove unmerged new paths
+51a94af - Fix "checkout --track -b newbranch" on detached HEAD
+b0ad11e - pull: allow "git pull origin $something:$current_branch" into an
+unborn branch
+```
+
+###   撤消操作
 
 
 
