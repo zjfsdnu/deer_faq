@@ -468,6 +468,98 @@ unborn branch
 
 ### 远程仓库的使用
 
+##### 查看远程仓库 
+
+`git remote` 命令。 它会列出你指定的每一个远程服务器的简写
+
+```shell
+$ git clone https://github.com/schacon/ticgit
+Cloning into 'ticgit'...
+remote: Reusing existing pack: 1857, done.
+remote: Total 1857 (delta 0), reused 0 (delta 0)
+Receiving objects: 100% (1857/1857), 374.35 KiB | 268.00 KiB/s, done.
+Resolving deltas: 100% (772/772), done.
+Checking connectivity... done.
+$ cd ticgit
+$ git remote
+origin
+```
+
+指定选项 -v，会显示需要读写远程仓库使用的 Git 保存的简写与其对应的 URL
+
+```shell
+$ git remote -v
+origin https://github.com/schacon/ticgit (fetch)
+origin https://github.com/schacon/ticgit (push)
+```
+
+##### 添加远程仓库
+
+运行 `git remote add <shortname> <url>` 添加一个新的远程 Git 仓库，同时指定一个你可以轻松引用的简写：
+
+```shell
+$ git remote
+origin
+$ git remote add pb https://github.com/paulboone/ticgit
+$ git remote -v
+origin https://github.com/schacon/ticgit (fetch)
+origin https://github.com/schacon/ticgit (push)
+pb https://github.com/paulboone/ticgit (fetch)
+pb https://github.com/paulboone/ticgit (push)	
+```
+
+##### 从远程仓库中抓取与拉取
+
+```shell
+$ git fetch [remote-name]
+```
+
+这个命令会访问远程仓库，从中拉取所有你还没有的数据。 执行完成后，你将会拥有那个远程仓库中所有分支的引用，可以随时合并或查看
+
+必须注意 git fetch 命令会将数据拉取到你的本地仓库——它并不会自动合并或修改你当前的工作。 当准备好时你必须手动将其合并入你的工作
+
+##### 推送到远程仓库
+
+```shell
+$ git push origin master
+```
+
+只有当你有所克隆服务器的写入权限，并且之前没有人推送过时，这条命令才能生效。 当你和其他人在同一时间克隆，他们先推送到上游然后你再推送到上游，你的推送就会毫无疑问地被拒绝。 你必须先将他们的工作拉取下来并将其合并进你的工作后才能推送
+
+##### 查看某个远程仓库
+
+```shell
+$ git remote show origin
+* remote origin
+	Fetch URL: https://github.com/schacon/ticgit
+	Push URL: https://github.com/schacon/ticgit
+	HEAD branch: master
+	Remote branches:
+		master 			tracked
+		dev-branch 		tracked
+	Local branch configured for 'git pull':
+		master merges with remote master
+	Local ref configured for 'git push':
+		master pushes to master (up to date)
+```
+
+它同样会列出远程仓库的 URL 与跟踪分支的信息。 这些信息非常有用，它告诉你正处于 master 分支，并且如
+果运行 git pull，就会抓取所有的远程引用，然后将远程 master 分支合并到本地 master 分支。 它也会列出拉取
+到的所有远程引用
+
+##### 远程仓库的移除与重命名
+
+```shell
+$ git remote rename pb paul
+$ git remote
+origin
+paul
+
+$ git remote rm paul
+$ git remote
+origin
+```
+
 
 
 ### 打标签
