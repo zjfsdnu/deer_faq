@@ -466,6 +466,192 @@ unborn branch
 
 
 
+### 远程仓库的使用
+
+
+
+### 打标签
+
+Git 可以给历史中的某一个提交打上标签，以示重要。 比较有代表性的是标记发布结点（v1.0 等）
+
+##### 列出标签
+
+```shell
+$ git tag
+v0.1
+v1.3
+```
+
+可以使用特定的模式查找标签，比如列出1.8.5系列：
+
+```shell
+$ git tag -l 'v1.8.5*'
+v1.8.5
+v1.8.5-rc0
+v1.8.5-rc1
+v1.8.5-rc2
+v1.8.5-rc3
+v1.8.5.1
+v1.8.5.2
+v1.8.5.3
+v1.8.5.4
+v1.8.5.5
+```
+
+##### 创建标签
+
+Git 使用两种主要类型的标签：轻量标签（lightweight）与附注标签（annotated）
+
+一个轻量标签很像一个不会改变的分支——它只是一个特定提交的引用
+
+然而，附注标签是存储在 Git 数据库中的一个完整对象。 它们是可以被校验的；其中包含打标签者的名字、电子邮件地址、日期时间；还有一个标签信息；并且可以使用 GNU Privacy Guard （GPG）签名与验证
+
+##### 附注标签
+
+```shell
+$ git tag -a v1.4 -m "my version 1.4"
+$ git tag
+v0.1
+v1.3
+v1.4
+```
+
+-m 选项指定了一条将会存储在标签中的信息。 如果没有为附注标签指定一条信息，Git 会运行编辑器要求你输入信息
+
+```shell
+$ git show v1.4
+tag v1.4
+Tagger: Ben Straub <ben@straub.cc>
+Date: Sat May 3 20:19:12 2014 -0700
+	my version 1.4
+
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon <schacon@gee-mail.com>
+Date: Mon Mar 17 21:52:11 2008 -0700
+	changed the version number
+```
+
+输出显示了打标签者的信息、打标签的日期时间、附注信息，然后显示具体的提交信息
+
+##### 轻量标签
+
+轻量标签本质上是将提交校验和存储到一个文件中——没有保存任何其他信息
+
+```shell
+$ git tag v1.4-lw
+$ git tag
+v0.1
+v1.3
+v1.4
+v1.4-lw
+v1.5
+
+$ git show v1.4-lw
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon <schacon@gee-mail.com>
+Date: Mon Mar 17 21:52:11 2008 -0700
+	changed the version number
+```
+
+##### 后期打标签
+
+在命令的末尾指定提交的校验和（或部分校验和）：
+
+```shell
+$ git tag -a v1.2 9fceb02
+$ git tag
+v0.1
+v1.2
+v1.3
+v1.4
+v1.4-lw
+v1.5
+$ git show v1.2
+tag v1.2
+Tagger: Scott Chacon <schacon@gee-mail.com>
+Date: Mon Feb 9 15:32:16 2009 -0800
+	version 1.2
+commit 9fceb02d0ae598e95dc970b74767f19372d61af8
+Author: Magnus Chacon <mchacon@gee-mail.com>
+Date: Sun Apr 27 20:43:35 2008 -0700
+	updated rakefile
+...
+```
+
+##### 共享标签
+
+默认情况下，git push 命令并不会传送标签到远程仓库服务器上。 在创建完标签后你必须显式地推送标签到
+共享服务器上。 这个过程就像共享远程分支一样——你可以运行 git push origin [tagname]
+
+```shell
+$ git push origin v1.5
+Counting objects: 14, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (12/12), done.
+Writing objects: 100% (14/14), 2.05 KiB | 0 bytes/s, done.
+Total 14 (delta 3), reused 0 (delta 0)
+To git@github.com:schacon/simplegit.git
+	* [new tag] v1.5 -> v1.5
+```
+
+
+如果想要一次性推送很多标签，也可以使用带有 --tags 选项的 git push 命令。 这将会把所有不在远程仓库服务器上的标签全部传送到那里
+
+```shell
+$ git push origin --tags
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 160 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To git@github.com:schacon/simplegit.git
+	* [new tag] v1.4 -> v1.4
+	* [new tag] v1.4-lw -> v1.4-lw
+```
+
+##### 删除标签
+
+```shell
+$ git tag -d v1.4-lw
+Deleted tag 'v1.4-lw' (was e7d5add)
+```
+
+你必须使用 git push <remote>:refs/tags/<tagname> 来更新你的远程仓库：
+
+```shell
+$ git push origin :refs/tags/v1.4-lw
+To /git@github.com:schacon/simplegit.git
+- [deleted] v1.4-lw
+```
+
+### Git 别名
+
+如果不想每次都输入完整的 Git 命令，可以通过 `git config` 文件来轻松地为每一个命令设置一个别名  
+
+```shell
+$ git config --global alias.co checkout
+$ git config --global alias.br branch
+$ git config --global alias.ci commit
+$ git config --global alias.st status
+```
+
+为了解决取消暂存文件的易用性问题，可以向 Git 中添加你自己的取消暂存别名：
+
+```shell
+$ git config --global alias.unstage 'reset HEAD --'
+```
+
+通常也会添加一个 last 命令，像这样：
+
+```shell
+$ git config --global alias.last 'log -1 HEAD'
+```
+
+执行外部命令，而不是一个 Git 子命令的话，可以在命令前面加入 ! 符号
+
+```shell
+$ git config --global alias.visual '!gitk'
+```
+
+
 
 # Git 分支
 
