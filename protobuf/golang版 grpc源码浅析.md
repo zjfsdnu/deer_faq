@@ -26,7 +26,8 @@ func (cs *clientStream) SendMsg(m interface{}) (err error) {
 	// load hdr, payload, data
 	hdr, payload, data, err := prepareMsg(m, cs.codec, cs.cp, cs.comp)
 	if err != nil {
-		return err	}
+		return err
+	}
 
 	// TODO(dfawley): should we be checking len(data) instead?
 	if len(payload) > *cs.callInfo.maxSendMessageSize {
@@ -38,7 +39,8 @@ func (cs *clientStream) SendMsg(m interface{}) (err error) {
 		// nil out the message and uncomp when replaying; they are only needed for
 		// stats which is disabled for subsequent attempts.
 		m, data = nil, nil
-		return err	}
+		return err
+	}
 	err = cs.withRetry(op, func() { cs.bufferForRetryLocked(len(hdr)+len(payload), op) })
 	if cs.binlog != nil && err == nil {
 		cs.binlog.Log(&binarylog.ClientMessage{
@@ -46,7 +48,8 @@ func (cs *clientStream) SendMsg(m interface{}) (err error) {
 			Message:      msgBytes,
 		})
 	}
-	return}
+	return
+}
 ```
 
 这段代码,主要进行了消息头的封装,发送数据长度检查,以及将数据放到待发送缓冲区等工作。
@@ -54,7 +57,8 @@ func (cs *clientStream) SendMsg(m interface{}) (err error) {
  prepareMsg这个函数，里面做了数据编码(如果设置了编码函数),数据压缩(如果设置了压缩函数)，和消息头的封装。消息头格式为:压缩标志+消息长度，总共占5字节。其中，压缩标志占1个字节,长度占4个字节。网络数据格式如下图:
 
  ![grpc网络数据格式](http://image.okcode.net/F7B15F45104CF4BC81E152F39BB4CA82.jpg)
- 讲完了理论，还是看看源码吧
+
+讲完了理论，还是看看源码吧
 
  prepareMsg函数如下:
 
@@ -67,12 +71,15 @@ func prepareMsg(m interface{}, codec baseCodec, cp Compressor, comp encoding.Com
 	// Marshal and Compress the data at this point
 	data, err = encode(codec, m)
 	if err != nil {
-		return nil, nil, nil, err	}
+		return nil, nil, nil, err
+	}
 	compData, err := compress(data, cp, comp)
 	if err != nil {
-		return nil, nil, nil, err	}
+		return nil, nil, nil, err
+	}
 	hdr, payload = msgHeader(data, compData)
-	return hdr, payload, data, nil}
+	return hdr, payload, data, nil
+}
 ```
 
 msgHeader函数如下:
@@ -82,13 +89,15 @@ func msgHeader(data, compData []byte) (hdr []byte, payload []byte) {
 	hdr = make([]byte, headerLen)
 	if compData != nil {
 		hdr[0] = byte(compressionMade)
-		data = compData	} else {
+		data = compData
+	} else {
 		hdr[0] = byte(compressionNone)
 	}
 
 	// Write length of payload into buf
 	binary.BigEndian.PutUint32(hdr[payloadLen:], uint32(len(data)))
-	return hdr, data}
+	return hdr, data
+}
 ```
 
 看完了grpc发送数据代码(当然只是看了发送数据的格式,真正调用tcp socket  的send函数并没有展示,因为没有太大意义),我们可以推测接收数据函数肯定会按照发送的数据格式,进行解压，进行粘包,组装一个完整的数据包后，然后抛给应用层。那么就让我们来看看是否和我们的猜想一致吧！
@@ -100,7 +109,8 @@ func msgHeader(data, compData []byte) (hdr []byte, payload []byte) {
 ```go
 func (p *parser) recvMsg(maxReceiveMessageSize int) (pf payloadFormat, msg []byte, err error) {
 	if _, err := p.r.Read(p.header[:]); err != nil {
-		return 0, nil, err	}
+		return 0, nil, err
+	}
 
 	pf = payloadFormat(p.header[0])
 	length := binary.BigEndian.Uint32(p.header[1:])
@@ -119,9 +129,12 @@ func (p *parser) recvMsg(maxReceiveMessageSize int) (pf payloadFormat, msg []byt
 	msg = make([]byte, int(length))
 	if _, err := p.r.Read(msg); err != nil {
 		if err == io.EOF {
-			err = io.ErrUnexpectedEOF		}
-		return 0, nil, err	}
-	return pf, msg, nil}
+			err = io.ErrUnexpectedEOF
+		}
+		return 0, nil, err
+	}
+	return pf, msg, nil
+}
 ```
 
 注意，接收单个数据包最大长度为maxReceiveMessageSize ，默认是 4194304（4M）。
@@ -139,16 +152,20 @@ func (p *parser) recvMsg(maxReceiveMessageSize int) (pf payloadFormat, msg []byt
 ```go
 func ReadAtLeast(r Reader, buf []byte, min int) (n int, err error) {
 	if len(buf) < min {
-		return 0, ErrShortBuffer	}
+		return 0, ErrShortBuffer
+	}
 	for n < min && err == nil {
 		var nn int
 		nn, err = r.Read(buf[n:])
-		n += nn	}
+		n += nn
+	}
 	if n >= min {
 		err = nil
 	} else if n > 0 && err == EOF {
-		err = ErrUnexpectedEOF	}
-	return}
+		err = ErrUnexpectedEOF
+	}
+	return
+}
 ```
 
 这个函数的核心就是那个for循环啦，只要读取的数据没有达到最低要求，就不断尝试读取数据，直到读够数据为止。其实粘包就在这里悄悄的实现了。
@@ -167,7 +184,8 @@ func (r *recvBufferReader) readClient(p []byte) (n int, err error) {
 		return r.readAdditional(m, p)
 	case m := <-r.recv.get():
 		return r.readAdditional(m, p)
-	}}
+	}
+}
 ```
 
 GRPC框架采用HTTP2协议，而HTTP2是用过数据帧传输数据,当数据帧到达后,就放入接收数据channel。
