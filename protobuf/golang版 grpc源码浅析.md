@@ -2,7 +2,9 @@
 
  首先，我最关心的是，他是怎么处理数据流的。GRPC框架采用了HTTP2作为通讯协议，而HTTP2是基于TCP协议(传输控制协议)。TCP协议传输数据是通过数据流的方式传输，所以grpc也绕不开数据流的处理。
 
- 先看看发送数据函数:
+先看看发送数据函数:
+
+stream.go
 
 ```go
 func (cs *clientStream) SendMsg(m interface{}) (err error) {
@@ -62,6 +64,8 @@ func (cs *clientStream) SendMsg(m interface{}) (err error) {
 
  prepareMsg函数如下:
 
+stream.go
+
 ```go
 func prepareMsg(m interface{}, codec baseCodec, cp Compressor, comp encoding.Compressor) (hdr, payload, data []byte, err error) {
 	if preparedMsg, ok := m.(*PreparedMsg); ok {
@@ -84,6 +88,8 @@ func prepareMsg(m interface{}, codec baseCodec, cp Compressor, comp encoding.Com
 
 msgHeader函数如下:
 
+rpc_util.go
+
 ```go
 func msgHeader(data, compData []byte) (hdr []byte, payload []byte) {
 	hdr = make([]byte, headerLen)
@@ -105,6 +111,8 @@ func msgHeader(data, compData []byte) (hdr []byte, payload []byte) {
  额，接收网络数据函数要稍微复杂一些，函数嵌套深度达16层之多！这里就不把所有的函数都贴出来,喜欢研究源代码的童鞋自己去官方下载源码吧。在这里，我们说一下，GRPC接收数据的流程,并贴出一些比较关键的源码。
 
  接收消息头部代码
+
+rpc_util.go
 
 ```go
 func (p *parser) recvMsg(maxReceiveMessageSize int) (pf payloadFormat, msg []byte, err error) {
@@ -137,7 +145,7 @@ func (p *parser) recvMsg(maxReceiveMessageSize int) (pf payloadFormat, msg []byt
 }
 ```
 
-注意，接收单个数据包最大长度为maxReceiveMessageSize ，默认是 4194304（4M）。
+注意，接收单个数据包最大长度为maxReceiveMessageSize (clientconn.go) ，默认是 4194304（4M）。
 
 首先读取消息头部(5字节)。然后解析出压缩标志和消息包长度(不含消息头部大小)。最后根据消息长度读取消息内容。
 
@@ -148,6 +156,8 @@ func (p *parser) recvMsg(maxReceiveMessageSize int) (pf payloadFormat, msg []byt
   Stream.Read()->io.ReadFull()->io.ReadAtLeast()->transportReader.Read()->recvBufferReader.Read()->recvBufferReader.readClient()
 
  ReadAtLeast这个函数会读取指定长度数据后再返回：
+
+io/io.go
 
 ```go
 func ReadAtLeast(r Reader, buf []byte, min int) (n int, err error) {
@@ -170,7 +180,9 @@ func ReadAtLeast(r Reader, buf []byte, min int) (n int, err error) {
 
 这个函数的核心就是那个for循环啦，只要读取的数据没有达到最低要求，就不断尝试读取数据，直到读够数据为止。其实粘包就在这里悄悄的实现了。
 
- readClient从接收数据channel里面取出数据:
+readClient从接收数据channel里面取出数据:
+
+internal/transport/transport.go
 
 ```go
 func (r *recvBufferReader) readClient(p []byte) (n int, err error) {
@@ -192,4 +204,11 @@ GRPC框架采用HTTP2协议，而HTTP2是用过数据帧传输数据,当数据�
 
 readClient就可以从接收数据channel里面去数据啦。在传输数据较小(小于16K)的情况下，单个数据帧就能传输完毕。但是如果单个数据帧不能完成数据传输，就会用到上面提到的粘包功能了(这里也可以叫做粘帧,毕竟是通过数据帧传输数据的)。
 
- 相信通过以上分析，能对GRPC网络通信这块有一个大概的了解。这里面并没有提到HTTP2的Hpack思想,哈夫曼编码(Huffman Coding)等实现细节。有兴趣的朋友可以自己去了解下，这些仍然值得我们学习。
+ 相信通过以上分析，能对GRPC网络通信这块有一个大概的了解。这里面并没有提到HTTP2的HPACK思想,哈夫曼编码(Huffman Coding)等实现细节。有兴趣的朋友可以自己去了解下，这些仍然值得我们学习。
+
+------
+
+参考地址：
+
+1. https://www.okcode.net/article/60025
+2. https://blog.fundebug.com/2019/03/07/understand-http2-and-http3
