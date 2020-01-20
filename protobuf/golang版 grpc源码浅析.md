@@ -145,7 +145,19 @@ func (p *parser) recvMsg(maxReceiveMessageSize int) (pf payloadFormat, msg []byt
 }
 ```
 
-注意，接收单个数据包最大长度为maxReceiveMessageSize (clientconn.go) ，默认是 4194304（4M）。
+注意，接收单个数据包最大长度为maxReceiveMessageSize，默认是 4194304（4M）。
+
+clientconn.go
+
+```go
+const (
+	defaultClientMaxReceiveMessageSize = 1024 * 1024 * 4
+	defaultClientMaxSendMessageSize    = math.MaxInt32
+	// http2IOBufSize specifies the buffer size for sending frames.
+	defaultWriteBufSize = 32 * 1024
+	defaultReadBufSize  = 32 * 1024
+)
+```
 
 首先读取消息头部(5字节)。然后解析出压缩标志和消息包长度(不含消息头部大小)。最后根据消息长度读取消息内容。
 
