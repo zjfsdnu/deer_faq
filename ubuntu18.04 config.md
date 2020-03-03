@@ -4,6 +4,29 @@ sudo apt install net-tools
 
 sudo apt install git make g++ vim
 
+```shell
+sudo vim /etc/profile
+
+# GO ENVIRONMENT SETTING
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+
+source /etc/profile
+
+go version
+go env -w GO111MODULE=on
+go env -w GOPROXY=https://goproxy.cn,direct
+```
+
+```
+sudo /etc/vim/vimrc
+
+set nu
+set ts=4
+set hlsearch
+syntax on
+```
 
 拿到了一台新机子，带显卡的那种，当然是各种倒腾了！于是我又一天装了三遍机子来进行各种尝试熟悉配置啥的。
 
