@@ -2,6 +2,8 @@ sudo apt install ntfs-config
 
 sudo apt install net-tools
 
+sudo apt install git make g++ vim
+
 
 拿到了一台新机子，带显卡的那种，当然是各种倒腾了！于是我又一天装了三遍机子来进行各种尝试熟悉配置啥的。
 
