@@ -1,8 +1,16 @@
+## ntfs support
+
 sudo apt install ntfs-config
+
+## ifconfig
 
 sudo apt install net-tools
 
+## other
+
 sudo apt install git make g++ vim
+
+## golang
 
 ```shell
 sudo vim /etc/profile
@@ -19,6 +27,7 @@ go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.cn,direct
 ```
 
+## vim
 ```
 sudo /etc/vim/vimrc
 
@@ -27,6 +36,8 @@ set ts=4
 set hlsearch
 syntax on
 ```
+
+# nvidia driver
 
 拿到了一台新机子，带显卡的那种，当然是各种倒腾了！于是我又一天装了三遍机子来进行各种尝试熟悉配置啥的。
 
