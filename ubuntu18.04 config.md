@@ -1,14 +1,14 @@
 ## ntfs support
 
-sudo apt install ntfs-config
+> sudo apt install ntfs-config
 
 ## ifconfig
 
-sudo apt install net-tools
+> sudo apt install net-tools
 
 ## other
 
-sudo apt install git make g++ vim
+> sudo apt install git make g++ vim
 
 ## golang
 
