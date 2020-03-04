@@ -45,11 +45,13 @@ sudo systemctl status taosd
 
 ## VMware Workstation Pro 15 激活许可证
 
+```
 UY758-0RXEQ-M81WP-8ZM7Z-Y3HDA
 VF750-4MX5Q-488DQ-9WZE9-ZY2D6
 UU54R-FVD91-488PP-7NNGC-ZFAX6
 YC74H-FGF92-081VZ-R5QNG-P6RY4
 YC34H-6WWDK-085MQ-JYPNX-NZRA2
+```
 
 ## 截图快捷键
 
@@ -58,6 +60,25 @@ Ctrl+Shift+Print
 ## 搜狗输入法
 
 区域和语言 - 管理已安装的语言 - 键盘输入法 选择 fcitx 重启
+
+
+## typora
+```
+# or run:
+# sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BA300B7755AFCFAE
+
+wget -qO - https://typora.io/linux/public-key.asc | sudo apt-key add -
+
+# add Typora's repository
+
+sudo add-apt-repository 'deb https://typora.io/linux ./'
+
+sudo apt-get update
+
+# install typora
+
+sudo apt-get install typora
+```
 
 # nvidia driver
 
