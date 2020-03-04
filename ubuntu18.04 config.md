@@ -29,12 +29,18 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 ## vim
 ```
-sudo /etc/vim/vimrc
+sudo vim /etc/vim/vimrc
 
 set nu
 set ts=4
 set hlsearch
 syntax on
+```
+
+## TDengine
+```
+sudo systemctl start taosd
+sudo systemctl status taosd
 ```
 
 # nvidia driver
