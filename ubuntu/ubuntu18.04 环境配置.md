@@ -199,3 +199,5 @@ uget->编辑->设置->插件 选择aria2
 > nvidia-smi
 
 如果有个表格式的信息显示出来，就说明安装成功啦
+
+![](nvidia-smi.png)
