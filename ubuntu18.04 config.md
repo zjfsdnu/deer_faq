@@ -51,6 +51,13 @@ UU54R-FVD91-488PP-7NNGC-ZFAX6
 YC74H-FGF92-081VZ-R5QNG-P6RY4
 YC34H-6WWDK-085MQ-JYPNX-NZRA2
 
+## 截图快捷键
+
+Ctrl+Shift+Print
+
+## 搜狗输入法
+
+区域和语言 - 管理已安装的语言 - 键盘输入法 选择 fcitx
 
 # nvidia driver
 
