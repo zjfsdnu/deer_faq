@@ -57,7 +57,7 @@ Ctrl+Shift+Print
 
 ## 搜狗输入法
 
-区域和语言 - 管理已安装的语言 - 键盘输入法 选择 fcitx
+区域和语言 - 管理已安装的语言 - 键盘输入法 选择 fcitx 重启
 
 # nvidia driver
 
