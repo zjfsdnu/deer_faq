@@ -43,6 +43,74 @@ sudo systemctl start taosd
 sudo systemctl status taosd
 ```
 
+## redis
+
+```
+sudo apt install redis-server
+redis-server
+redis-cli  -h 127.0.0.1 -p 6379 -a 123456
+sudo snap install redis-desktop-manager
+```
+
+## socketpro
+
+```
+sudo apt-get install build-essential autoconf libtool libssl-dev libpcre3 libpcre3-dev asciidoc xmlto libz-dev zlib1g-dev
+git clone https://github.com/shadowsocksr-backup/shadowsocksr-libev.git ~/socketpro/client
+cd ~/socketpro/client
+./configure && make
+sudo make install
+ss-local -h
+
+ss-local -c ~/socketpro/PHK1.json 
+```
+
+## mstsc
+
+```
+sudo apt install xrdp
+sudo vim /etc/xrdp/startwm.sh
+并将最后两行test和exec用#注释掉，在最后一行添加gnome-session
+```
+
+## insomnia
+
+```
+sudo snap install insomnia
+```
+
+## postman
+
+> sudo tar zxf Postman-linux-x64-7.19.1.tar.gz -C /opt/
+
+给Postman添加快捷访问方式：
+
+执行命令：sudo ln -s /opt/Postman/Postman /usr/bin/postman
+
+执行命令：cat > ~/.local/share/applications/postman.desktop <<EOL
+
+输入下面的代码后，按两次enter键或ctrl+d退出：
+
+[Desktop Entry]
+
+Encoding=UTF-8
+
+Name=Postman
+
+Exec=postman
+
+Icon=/opt/Postman/app/resources/app/assets/icon.png
+
+Terminal=false
+
+Type=Application
+
+Categories=Development;
+
+EOL
+
+
+
 ## VMware Workstation Pro 15 激活许可证
 
 ```
@@ -79,6 +147,19 @@ sudo apt-get update
 
 sudo apt-get install typora
 ```
+
+## uget+aria2
+
+```
+sudo add-apt-repository ppa:plushuang-tw/uget-stable
+sudo add-apt-repository ppa:t-tujikawa/ppa
+sudo apt-get update
+sudo apt-get install uget aria2
+```
+
+uget->编辑->设置->插件 选择aria2
+
+
 
 # nvidia driver
 
