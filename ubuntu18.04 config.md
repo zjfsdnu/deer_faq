@@ -43,6 +43,15 @@ sudo systemctl start taosd
 sudo systemctl status taosd
 ```
 
+## VMware Workstation Pro 15 激活许可证
+
+UY758-0RXEQ-M81WP-8ZM7Z-Y3HDA
+VF750-4MX5Q-488DQ-9WZE9-ZY2D6
+UU54R-FVD91-488PP-7NNGC-ZFAX6
+YC74H-FGF92-081VZ-R5QNG-P6RY4
+YC34H-6WWDK-085MQ-JYPNX-NZRA2
+
+
 # nvidia driver
 
 拿到了一台新机子，带显卡的那种，当然是各种倒腾了！于是我又一天装了三遍机子来进行各种尝试熟悉配置啥的。
