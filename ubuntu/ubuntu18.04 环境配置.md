@@ -111,6 +111,17 @@ EOL
 
 
 
+## 更换主题
+
+```
+sudo apt install gnome-tweak-tool
+sudo apt install gnome-shell-extensions
+```
+
+https://www.gnome-look.org/
+
+
+
 ## git push github  免输入账号和密码方法
 
 **git config --global credential.helper store**
