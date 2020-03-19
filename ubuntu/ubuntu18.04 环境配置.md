@@ -52,6 +52,48 @@ redis-cli  -h 127.0.0.1 -p 6379 -a 123456
 sudo snap install redis-desktop-manager
 ```
 
+```
+$ redis-benchmark -n 10000 -q #性能测试 大概10万多每秒
+
+PING_INLINE: 121654.50 requests per second
+PING_BULK: 124378.11 requests per second
+SET: 122699.39 requests per second
+GET: 121802.68 requests per second
+INCR: 120627.27 requests per second
+LPUSH: 119760.48 requests per second
+RPUSH: 120048.02 requests per second
+LPOP: 119331.74 requests per second
+RPOP: 116959.06 requests per second
+SADD: 118906.06 requests per second
+HSET: 121506.68 requests per second
+SPOP: 118343.19 requests per second
+LPUSH (needed to benchmark LRANGE): 119474.31 requests per second
+LRANGE_100 (first 100 elements): 120627.27 requests per second
+LRANGE_300 (first 300 elements): 120336.95 requests per second
+LRANGE_500 (first 450 elements): 120192.30 requests per second
+LRANGE_600 (first 600 elements): 119760.48 requests per second
+MSET (10 keys): 125313.29 requests per second
+```
+
+
+
+## 编译安装redis-server并注册到systemd
+
+```shell
+wget http://download.redis.io/releases/redis-5.0.8.tar.gz
+tar zxf redis-5.0.8.tar.gz
+cd redis-5.0.8
+make #编译源码
+make install #安装到 /usr/local/bin
+
+sudo vim /etc/systemd/system/redis-server.service
+修改[Service]的ExecStart路径
+
+sudo systemctl daemon-reload
+sudo systemctl enable redis-server.service 
+sudo systemctl start redis-server.service
+```
+
 ## socketpro
 
 ```
@@ -109,6 +151,20 @@ Categories=Development;
 
 EOL
 
+## notepad++
+
+```shell
+sudo add-apt-repository ppa:notepadqq-team/notepadqq      
+sudo apt-get update      
+sudo apt-get install notepadqq
+```
+
+## 支持7zip
+
+```
+sudo apt install p7zip-full p7zip-rar
+```
+
 
 
 ## 更换主题
@@ -119,8 +175,6 @@ sudo apt install gnome-shell-extensions
 ```
 
 https://www.gnome-look.org/
-
-
 
 ## git push github  免输入账号和密码方法
 
