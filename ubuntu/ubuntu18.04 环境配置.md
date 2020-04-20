@@ -151,13 +151,6 @@ Categories=Development;
 
 EOL
 
-## notepad++
-
-```shell
-sudo add-apt-repository ppa:notepadqq-team/notepadqq      
-sudo apt-get update      
-sudo apt-get install notepadqq
-```
 
 ## 支持7zip
 
@@ -231,7 +224,6 @@ sudo apt-get install typora
 
 ```
 sudo add-apt-repository ppa:plushuang-tw/uget-stable
-sudo add-apt-repository ppa:t-tujikawa/ppa
 sudo apt-get update
 sudo apt-get install uget aria2
 ```
@@ -240,7 +232,7 @@ uget->编辑->设置->插件 选择aria2
 
 
 
-# nvidia driver
+# nvidia driver （不建议安装）
 
 拿到了一台新机子，带显卡的那种，当然是各种倒腾了！于是我又一天装了三遍机子来进行各种尝试熟悉配置啥的。
 
