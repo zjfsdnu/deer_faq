@@ -201,6 +201,8 @@ Ctrl+Shift+Print
 
 区域和语言 - 管理已安装的语言 - 键盘输入法 选择 fcitx 重启
 
+https://gitee.com/laomocode/fcitx-sogoupinyin
+
 
 ## typora
 ```
