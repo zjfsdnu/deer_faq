@@ -158,7 +158,15 @@ EOL
 sudo apt install p7zip-full p7zip-rar
 ```
 
+## 时钟显示秒
 
+```
+sudo apt install gnome-tweak-tool
+```
+
+安装Gnome tweaks后打开它，找到Top Bar选项 
+
+里面可以设置Date和Seconds（秒），打开就可以了
 
 ## 更换主题
 
