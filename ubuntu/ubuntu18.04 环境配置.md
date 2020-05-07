@@ -43,6 +43,12 @@ sudo systemctl start taosd
 sudo systemctl status taosd
 ```
 
+## wireshark
+```
+sudo add-apt-repository universe
+sudo apt install wireshark
+```
+
 ## redis
 
 ```
